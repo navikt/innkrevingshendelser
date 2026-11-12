@@ -1,0 +1,13 @@
+.gradle/
+build/
+out/
+.idea/
+*.iml
+.vscode/
+.DS_Store
+
+# Lokale miljøvariabler og hemmeligheter
+.env
+.env.*
+!.env.example
+!.env.*.example

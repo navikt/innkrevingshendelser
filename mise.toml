@@ -1,0 +1,15 @@
+[tools]
+java = "temurin-21.0.13+9.0.LTS"
+
+[tasks.run]
+run = "./gradlew run"
+
+[tasks.test]
+run = "./gradlew test"
+
+[tasks.check]
+run = "./gradlew check"
+
+[tasks.build]
+run = "./gradlew build installDist"
+description = "Build and create the application distribution"
