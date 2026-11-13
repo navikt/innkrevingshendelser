@@ -37,7 +37,7 @@ Readiness bekrefter bare at Ktor har startet. Ingen Kafka-produsent opprettes ve
 
 ## Container
 
-Dockerfile bruker Navs Chainguard JRE 21, låst til en digest hentet av utvikleren.
+Dockerfile bruker Navs Chainguard JRE 25, låst til en digest hentet av utvikleren.
 Registryet krever autentisering. Ikke del tokens eller lokale credential-filer.
 Containeren kjører som non-root og kopierer bare biblioteker fra Gradle-distribusjonen.
 Java startes direkte, siden runtime-imaget ikke trenger et shell.
