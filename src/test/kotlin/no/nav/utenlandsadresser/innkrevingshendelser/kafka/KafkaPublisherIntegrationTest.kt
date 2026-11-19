@@ -1,46 +1,37 @@
 package no.nav.utenlandsadresser.innkrevingshendelser.kafka
 
-import io.kotest.core.spec.style.FunSpec
+import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
+import kotest.createRandomTopic
+import kotest.installKafka
+import no.nav.utenlandsadresser.innkrevingshendelser.infrastructure.kafka.KafkaKey
+import no.nav.utenlandsadresser.innkrevingshendelser.infrastructure.kafka.KafkaPublisher
+import no.nav.utenlandsadresser.innkrevingshendelser.infrastructure.kafka.KafkaValue
 import org.apache.kafka.clients.consumer.ConsumerRecords
-import org.apache.kafka.clients.producer.RecordMetadata
-import org.testcontainers.kafka.KafkaContainer
+import kotlin.time.Duration.Companion.seconds
+import kotlin.time.toJavaDuration
 
-class KafkaPublisherIntegrationTest : FunSpec({
-    test("TODO: publishes a record that can be read back; disabled until fixtures are implemented").config(enabled = false) {
-        KafkaContainer("apache/kafka-native:3.9.1").use { broker ->
-            broker.start()
+class KafkaPublisherIntegrationTest :
+    StringSpec({
+        val (producer, consumer, admin) = installKafka()
 
-            val topic = "publisher-roundtrip"
-            val key = "synthetic-key"
-            val value = "synthetic-value"
-            val publisher: KafkaPublisher = TODO("Opprett publisher for testbroker og topic")
+        "publishes a record that can be read back" {
+            val topic = createRandomTopic(admin)
+            val key = KafkaKey("synthetic-key")
+            val value = KafkaValue("synthetic-value")
+
+            val publisher = KafkaPublisher(producer, topic)
 
             publisher.use {
                 val metadata = it.publish(key, value)
-                metadata.topic() shouldBe topic
-
-                val records: ConsumerRecords<String, String> =
-                    TODO("Lag testkonsument, les fra topic og returner records")
+                metadata.topic() shouldBe topic.value
+            }
+            consumer.use {
+                it.subscribe(listOf(topic.value))
+                val records: ConsumerRecords<String, String> = it.poll(3.seconds.toJavaDuration())
                 records.count() shouldBe 1
-                records.first().key() shouldBe key
-                records.first().value() shouldBe value
+                records.first().key() shouldBe key.value
+                records.first().value() shouldBe value.value
             }
         }
-    }
-
-    test("TODO: publish failure behavior; disabled until its contract is agreed").config(enabled = false) {
-        val failure: Throwable = TODO("Avklar testoppsett og feilkontrakt for publish")
-        failure::class shouldBe TODO("Avklar forventet feiltype uten å anta produktkontrakt")
-    }
-
-    test("TODO: publish timeout and unknown outcome; disabled until its contract is agreed").config(enabled = false) {
-        val result: Result<RecordMetadata> = TODO("Avklar hvordan timeout og ukjent utfall skal testes")
-        result shouldBe TODO("Avklar forventet resultat uten å anta produktkontrakt")
-    }
-
-    test("TODO: close behavior; disabled until bounded close and ownership are agreed").config(enabled = false) {
-        val result: Result<Unit> = TODO("Avklar lukketest, bounded close og eierskap")
-        result shouldBe TODO("Avklar forventet close-resultat uten å anta produktkontrakt")
-    }
-})
+    })

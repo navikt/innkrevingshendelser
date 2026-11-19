@@ -1,14 +1,14 @@
 package no.nav.utenlandsadresser.innkrevingshendelser
 
-import io.kotest.core.spec.style.FunSpec
+import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
-import io.ktor.client.request.get
-import io.ktor.client.statement.bodyAsText
-import io.ktor.http.HttpStatusCode
-import io.ktor.server.testing.testApplication
+import io.ktor.client.request.*
+import io.ktor.client.statement.*
+import io.ktor.http.*
+import io.ktor.server.testing.*
 
-class ApplicationTest : FunSpec({
-    test("health-endepunktene svarer med status og tekst") {
+class ApplicationTest : StringSpec({
+    "health-endepunktene svarer med status og tekst" {
         testApplication {
             application { module() }
 
@@ -23,7 +23,7 @@ class ApplicationTest : FunSpec({
         }
     }
 
-    test("metrics-endepunktet svarer med JVM-metrikker i Prometheus-format") {
+    "metrics-endepunktet svarer med JVM-metrikker i Prometheus-format" {
         testApplication {
             application { module() }
 
@@ -36,7 +36,7 @@ class ApplicationTest : FunSpec({
         }
     }
 
-    test("ukjent rute svarer med 404") {
+    "ukjent rute svarer med 404" {
         testApplication {
             application { module() }
 

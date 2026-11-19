@@ -18,9 +18,12 @@ dependencies {
     implementation(libs.micrometer.registry.prometheus)
 
     runtimeOnly(libs.logback.classic)
+    runtimeOnly(libs.logstash.logback.encoder)
+    runtimeOnly(libs.kotlinx.coroutines.core)
 
     testImplementation(libs.kotest.runner.junit5)
     testImplementation(libs.kotest.assertions.core)
+    testImplementation(libs.kotest.extensions.testcontainers)
     testImplementation(libs.ktor.server.test.host)
     testImplementation(libs.testcontainers.kafka)
 }
@@ -37,5 +40,6 @@ tasks.test {
     useJUnitPlatform()
     testLogging {
         events("passed", "skipped", "failed")
+        showStandardStreams = true
     }
 }

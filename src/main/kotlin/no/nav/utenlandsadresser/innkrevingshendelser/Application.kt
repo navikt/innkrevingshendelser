@@ -5,8 +5,8 @@ import io.ktor.server.application.Application
 import io.ktor.server.application.ApplicationStopped
 import io.ktor.server.application.install
 import io.ktor.server.engine.embeddedServer
-import io.ktor.server.netty.Netty
 import io.ktor.server.metrics.micrometer.MicrometerMetrics
+import io.ktor.server.netty.Netty
 import io.ktor.server.response.respondText
 import io.ktor.server.routing.get
 import io.ktor.server.routing.routing
@@ -22,14 +22,17 @@ import org.slf4j.LoggerFactory
 private val logger = LoggerFactory.getLogger("no.nav.utenlandsadresser.innkrevingshendelser.Application")
 
 fun main() {
-    val server = embeddedServer(Netty, port = 8080) {
-        module()
-    }
+    val server =
+        embeddedServer(Netty, port = 8080) {
+            module()
+        }
 
-    Runtime.getRuntime().addShutdownHook(Thread {
-        logger.info("Stopping application")
-        server.stop(gracePeriodMillis = 5_000, timeoutMillis = 10_000)
-    })
+    Runtime.getRuntime().addShutdownHook(
+        Thread {
+            logger.info("Stopping application")
+            server.stop(gracePeriodMillis = 5_000, timeoutMillis = 10_000)
+        },
+    )
 
     logger.info("Starting application")
     server.start(wait = true)
