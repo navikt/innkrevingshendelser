@@ -23,7 +23,11 @@ import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
 fun Spec.installKafka(): KafkaTestClients {
-    val imageName = DockerImageName.parse("apache/kafka-native:4.4.0")
+    // apache/kafka-native:4.4.0, låst til digest. Oppdateres sammen med kafka-clients.
+    val imageName =
+        DockerImageName.parse(
+            "apache/kafka-native@sha256:11fde816adf384402de9f3e57aeaf2c3722ba0671610247817688d07441714b4",
+        )
     val kafkaContainer = install(TestContainerSpecExtension(KafkaContainer(imageName)))
 
     val producerProperties =
