@@ -16,10 +16,11 @@ dependencies {
     implementation(libs.ktor.server.micrometer)
     implementation(libs.kafka.clients)
     implementation(libs.micrometer.registry.prometheus)
+    implementation(libs.arrow.core)
+    implementation(libs.kotlinx.coroutines.core)
 
     runtimeOnly(libs.logback.classic)
     runtimeOnly(libs.logstash.logback.encoder)
-    runtimeOnly(libs.kotlinx.coroutines.core)
 
     testImplementation(libs.kotest.runner.junit5)
     testImplementation(libs.kotest.assertions.core)

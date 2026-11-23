@@ -1,7 +1,7 @@
 [tools]
 "aqua:docker/buildx" = { version = "0.39.0", postinstall = "ln -sf $MISE_TOOL_INSTALL_PATH/docker-cli-plugin-docker-buildx $HOME/.docker/cli-plugins/docker-buildx" }
 docker-cli = "29.9.3"
-gradle = "9.9.1"
+gradle = "9.9.2"
 java = "temurin-25.0.5+8.0.LTS"
 kotlin = { version = "2.4.21", asset_pattern = "kotlin-compiler-*.zip", bin_path = "kotlinc/bin" }
 ktlint = "1.8.0"
