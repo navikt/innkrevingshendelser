@@ -120,6 +120,9 @@ Reglene der utfyller Navs generelle instruksjoner og går foran ved konflikt om 
   unntatt `kotlinx.coroutines` og `arrow-core`. Metrikker telles i adaptere.
 - Testdrevet utvikling: feilende test først, så minst mulig kode, så refaktorering.
   Brukstilfeller testes gjennom porten med håndskrevne fakes, ikke mock-bibliotek.
+- Navngiving: domeneklasser og egenskapene deres har norske navn. Alt annet, også testnavn,
+  skrives på engelsk. Æ, ø og å er tillatt i `domain` og `application`, ikke i `adapter` eller
+  i noe som forlater applikasjonen.
 
 ## Code Style
 

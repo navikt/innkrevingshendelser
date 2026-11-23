@@ -8,7 +8,7 @@ import io.ktor.http.*
 import io.ktor.server.testing.*
 
 class ApplicationTest : StringSpec({
-    "health-endepunktene svarer med status og tekst" {
+    "health endpoints respond with status and text" {
         testApplication {
             application { module() }
 
@@ -23,7 +23,7 @@ class ApplicationTest : StringSpec({
         }
     }
 
-    "metrics-endepunktet svarer med JVM-metrikker i Prometheus-format" {
+    "metrics endpoint responds with JVM metrics in Prometheus format" {
         testApplication {
             application { module() }
 
@@ -36,7 +36,7 @@ class ApplicationTest : StringSpec({
         }
     }
 
-    "ukjent rute svarer med 404" {
+    "unknown route responds with 404" {
         testApplication {
             application { module() }
 

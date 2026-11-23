@@ -99,7 +99,7 @@ trenger ikke Docker.
   urimelig dyr, men aldri for domeneklasser eller egne porter.
 - Test oppførsel gjennom porten, ikke private funksjoner eller interne kall.
 - Med `Either` testes både `Right` og hver relevant `Left`-variant.
-- Én oppførsel per test, med et testnavn som beskriver oppførselen.
+- Én oppførsel per test, med et engelsk testnavn som beskriver oppførselen.
 - Testklasser ligger i samme pakke og mappestruktur under `src/test/kotlin` som
   koden de tester under `src/main/kotlin`. Felles testhjelpere som ikke tester en
   bestemt klasse, ligger i pakken `kotest`.
@@ -110,6 +110,17 @@ trenger ikke Docker.
 - Dekningskravene i Navs testinstruksjoner gjelder. Dekning er et minimum, ikke
   målet. Målet er at hver oppførsel er drevet frem av en test.
 - `mise run check` skal være grønn før PR.
+
+## 3. Navngiving
+
+- Domeneklasser og egenskapene deres har norske navn, for eksempel
+  `Innkrevingshendelse` og `Krav.beløp`. Da bruker vi de samme ordene i samtaler
+  som i koden.
+- Alt annet skrives på engelsk, også testnavn.
+- Æ, ø og å er tillatt i navn i `domain` og `application`. De brukes ikke i
+  `adapter` eller i noe som forlater applikasjonen: serialiserte feltnavn,
+  topic-navn, metrikknavn, URL-er og miljøvariabler. Adapteren oversetter, for
+  eksempel fra `Krav.beløp` til JSON-feltet `belop` eller `amount`.
 
 ### KI-agenter og TDD
 

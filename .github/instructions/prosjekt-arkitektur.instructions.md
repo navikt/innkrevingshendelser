@@ -2,7 +2,7 @@
 applyTo: "src/**/*.kt"
 ---
 
-# Prosjektregler: Ports & Adapters og TDD
+# Prosjektregler: Ports & Adapters, TDD og navngiving
 
 Kilden er `docs/utviklingsregler.md`. Les den før du endrer struktur eller legger
 til kode. Reglene utfyller Navs generelle instruksjoner og går foran ved konflikt
@@ -30,3 +30,10 @@ om kodestruktur. Sikkerhetsreglene gjelder alltid.
 - I rød sone lager du bare tester og stubber, med mindre utvikleren ber om mer.
 - Endre aldri en eksisterende test for å få den grønn uten å si fra.
 - Oppgi hvilke tester du kjørte, og resultatet. Si fra hvis de ikke kunne kjøres.
+
+## Navngiving
+
+- Domeneklasser og egenskapene deres har norske navn (`Innkrevingshendelse`, `Krav.beløp`).
+  Alt annet skrives på engelsk, også testnavn.
+- Æ, ø og å er tillatt i `domain` og `application`. Ikke i `adapter`, og ikke i serialiserte
+  feltnavn, topic-navn, metrikknavn, URL-er eller miljøvariabler.
