@@ -11,7 +11,7 @@ logstash-logback-encoder = "9.0"
 arrow = "2.3.0.1"
 # Overstyringer av sårbare transitive versjoner, se build.gradle.kts
 jackson = "3.3.0"
-lz4-java = "1.11.4"
+lz4-java = "1.14.0"
 snappy-java = "1.1.10.12"
 
 [libraries]
