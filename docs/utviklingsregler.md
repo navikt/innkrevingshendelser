@@ -134,6 +134,21 @@ trenger ikke Docker.
 - Det som gjenstår, registreres som GitHub-issue.
 - Når koden endres, oppdateres dokumentasjonen i samme PR.
 
+## 5. Urelaterte funn
+
+En PR løser én oppgave. Oppdager vi noe som ikke hører til oppgaven, for eksempel
+en feil, manglende test, utdatert avhengighet eller en idé, fikser vi det ikke i
+samme PR:
+
+1. Opprett et GitHub-issue med bakgrunn og akseptansekriterier.
+2. Fortsett med oppgaven du holdt på med.
+3. Ta issuet i en egen PR senere.
+
+Unntak: Er funnet nødvendig for at oppgaven skal virke, eller er det en
+sikkerhetsfeil som ikke kan vente, tas det i samme PR og nevnes i beskrivelsen.
+
+KI-agenter viser utkastet til issuet og oppretter det når utvikleren har godkjent.
+
 ### KI-agenter og TDD
 
 - Agenten skriver testen før produksjonskoden, kjører den og viser at den feiler,

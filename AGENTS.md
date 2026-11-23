@@ -124,6 +124,9 @@ Reglene der utfyller Navs generelle instruksjoner og går foran ved konflikt om 
   i noe som forlater applikasjonen.
 - Dokumentasjon beskriver hvordan ting er. Ingen TODO-er, gjenstående oppgaver eller
   midlertidige tilstander i dokumentasjon eller skills. Det som gjenstår, hører hjemme i issues.
+- Urelaterte funn under arbeid blir et GitHub-issue, ikke en del av PR-en. Unntak er det som
+  trengs for at oppgaven skal virke, og sikkerhetsfeil som ikke kan vente. Agenten viser utkast
+  til issuet og oppretter det etter godkjenning.
 
 ## Code Style
 

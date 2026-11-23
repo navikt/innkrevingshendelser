@@ -38,6 +38,12 @@ om kodestruktur. Sikkerhetsreglene gjelder alltid.
 - Ingen TODO-er, oppgavelister eller midlertidige tilstander i dokumentasjon eller skills.
   Det som gjenstår, registreres som GitHub-issue.
 
+## Urelaterte funn
+
+- Oppdager du noe som ikke hører til oppgaven, fiks det ikke i samme endring. Vis et utkast
+  til GitHub-issue med bakgrunn og akseptansekriterier, og opprett det etter godkjenning.
+- Unntak: det som trengs for at oppgaven skal virke, og sikkerhetsfeil som ikke kan vente.
+
 ## Navngiving
 
 - Domeneklasser og egenskapene deres har norske navn (`Innkrevingshendelse`, `Krav.beløp`).
