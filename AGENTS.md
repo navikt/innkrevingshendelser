@@ -111,6 +111,14 @@ testtilgang. Ikke åpne lesetilgang automatisk for å gjøre testen.
 Rollback ved senere oppdateringer er å gjeninnføre forrige fungerende image.
 Ikke slett topicet som del av rollback. Ingen ressurser er opprettet av dette oppsettet.
 
+## Utviklingsregler
+
+Les `docs/utviklingsregler.md` før du endrer struktur eller legger til kode.
+Reglene der utfyller Navs generelle instruksjoner og går foran ved konflikt om kodestruktur.
+
+- Ports & Adapters: `adapter` → `application` → `domain`. Indre lag har ingen rammeverksimporter,
+  unntatt `kotlinx.coroutines` og `arrow-core`. Metrikker telles i adaptere.
+
 ## Code Style
 
 ### Minimal Editing
