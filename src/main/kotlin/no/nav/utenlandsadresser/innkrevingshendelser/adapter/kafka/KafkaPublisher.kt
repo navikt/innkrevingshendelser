@@ -1,4 +1,4 @@
-package no.nav.utenlandsadresser.innkrevingshendelser.infrastructure.kafka
+package no.nav.utenlandsadresser.innkrevingshendelser.adapter.kafka
 
 import kotlinx.coroutines.suspendCancellableCoroutine
 import org.apache.kafka.clients.producer.Callback

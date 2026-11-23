@@ -3,7 +3,7 @@ package kotest
 import io.kotest.core.extensions.install
 import io.kotest.core.spec.Spec
 import io.kotest.extensions.testcontainers.TestContainerSpecExtension
-import no.nav.utenlandsadresser.innkrevingshendelser.infrastructure.kafka.KafkaTopic
+import no.nav.utenlandsadresser.innkrevingshendelser.adapter.kafka.KafkaTopic
 import org.apache.kafka.clients.admin.Admin
 import org.apache.kafka.clients.admin.AdminClientConfig
 import org.apache.kafka.clients.admin.NewTopic

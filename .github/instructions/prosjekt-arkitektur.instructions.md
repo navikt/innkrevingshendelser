@@ -26,6 +26,7 @@ om kodestruktur. Sikkerhetsreglene gjelder alltid.
 - Test brukstilfeller gjennom den inngående porten med håndskrevne fakes av
   utgående porter. Ikke mock egne porter eller domeneklasser.
 - Test både `Right` og relevante `Left`-varianter.
+- Testklasser ligger i samme pakke som koden de tester. Felles testhjelpere ligger i `kotest`.
 - I rød sone lager du bare tester og stubber, med mindre utvikleren ber om mer.
 - Endre aldri en eksisterende test for å få den grønn uten å si fra.
 - Oppgi hvilke tester du kjørte, og resultatet. Si fra hvis de ikke kunne kjøres.

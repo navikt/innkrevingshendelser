@@ -100,6 +100,9 @@ trenger ikke Docker.
 - Test oppførsel gjennom porten, ikke private funksjoner eller interne kall.
 - Med `Either` testes både `Right` og hver relevant `Left`-variant.
 - Én oppførsel per test, med et testnavn som beskriver oppførselen.
+- Testklasser ligger i samme pakke og mappestruktur under `src/test/kotlin` som
+  koden de tester under `src/main/kotlin`. Felles testhjelpere som ikke tester en
+  bestemt klasse, ligger i pakken `kotest`.
 - En bugfiks starter med en test som gjenskaper feilen.
 - Tester bruker bare syntetiske data uten personopplysninger.
 - Hoppede tester (`xtest`, `enabled = false`) krever en kommentar med grunn og

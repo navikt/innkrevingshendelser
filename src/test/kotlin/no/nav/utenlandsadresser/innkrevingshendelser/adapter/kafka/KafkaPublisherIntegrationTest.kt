@@ -1,12 +1,9 @@
-package no.nav.utenlandsadresser.innkrevingshendelser.kafka
+package no.nav.utenlandsadresser.innkrevingshendelser.adapter.kafka
 
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import kotest.createRandomTopic
 import kotest.installKafka
-import no.nav.utenlandsadresser.innkrevingshendelser.infrastructure.kafka.KafkaKey
-import no.nav.utenlandsadresser.innkrevingshendelser.infrastructure.kafka.KafkaPublisher
-import no.nav.utenlandsadresser.innkrevingshendelser.infrastructure.kafka.KafkaValue
 import org.apache.kafka.clients.consumer.ConsumerRecords
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.toJavaDuration
