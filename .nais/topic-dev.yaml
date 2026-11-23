@@ -1,0 +1,18 @@
+# Utkast for syntetiske data i dev-gcp. Ingen konsumenter har tilgang.
+apiVersion: kafka.nais.io/v1
+kind: Topic
+metadata:
+  name: innkrevingshendelser-v1
+  namespace: utenlandsadresser
+  labels:
+    team: utenlandsadresser
+spec:
+  pool: nav-dev
+  config:
+    partitions: 1
+    cleanupPolicy: delete
+    retentionHours: 24
+  acl:
+    - team: utenlandsadresser
+      application: innkrevingshendelser
+      access: write

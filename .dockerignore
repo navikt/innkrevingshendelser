@@ -1,0 +1,6 @@
+**
+!Dockerfile
+!build/
+!build/install/
+!build/install/innkrevingshendelser/
+!build/install/innkrevingshendelser/**

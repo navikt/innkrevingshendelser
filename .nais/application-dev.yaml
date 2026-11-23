@@ -1,0 +1,36 @@
+# Utkast for dev-gcp. Ikke deploy før Kafka-oppgaven er fullført.
+apiVersion: nais.io/v1alpha1
+kind: Application
+metadata:
+  name: innkrevingshendelser
+  namespace: utenlandsadresser
+  labels:
+    team: utenlandsadresser
+spec:
+  image: "{{ image }}"
+  port: 8080
+  replicas:
+    min: 1
+    max: 1
+  kafka:
+    pool: nav-dev
+  liveness:
+    path: /isalive
+    initialDelay: 10
+  readiness:
+    path: /isready
+    initialDelay: 10
+  prometheus:
+    enabled: true
+    path: /metrics
+  resources:
+    requests:
+      cpu: 50m
+      memory: 256Mi
+    limits:
+      memory: 512Mi
+  accessPolicy:
+    inbound:
+      rules: []
+    outbound:
+      rules: []

@@ -1,0 +1,37 @@
+[versions]
+kotlin = "2.4.21"
+kotlinx = "1.11.0"
+ktor = "3.6.1"
+kotest = "6.2.7"
+kafka = "4.4.0"
+testcontainers = "2.0.5"
+micrometer = "1.18.0"
+logback = "1.6.8"
+logstash-logback-encoder = "9.0"
+arrow = "2.3.0.1"
+# Overstyringer av sårbare transitive versjoner, se build.gradle.kts
+jackson = "3.3.0"
+lz4-java = "1.11.4"
+snappy-java = "1.1.10.12"
+
+[libraries]
+ktor-server-core = { module = "io.ktor:ktor-server-core", version.ref = "ktor" }
+ktor-server-netty = { module = "io.ktor:ktor-server-netty", version.ref = "ktor" }
+ktor-server-micrometer = { module = "io.ktor:ktor-server-metrics-micrometer", version.ref = "ktor" }
+ktor-server-test-host = { module = "io.ktor:ktor-server-test-host", version.ref = "ktor" }
+kotest-runner-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
+kotest-assertions-core = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
+kotest-extensions-testcontainers = { module = "io.kotest:kotest-extensions-testcontainers", version.ref = "kotest" }
+kafka-clients = { module = "org.apache.kafka:kafka-clients", version.ref = "kafka" }
+testcontainers-kafka = { module = "org.testcontainers:testcontainers-kafka", version.ref = "testcontainers" }
+micrometer-registry-prometheus = { module = "io.micrometer:micrometer-registry-prometheus", version.ref = "micrometer" }
+logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
+logstash-logback-encoder = { module = "net.logstash.logback:logstash-logback-encoder", version.ref = "logstash-logback-encoder" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx" }
+arrow-core = { module = "io.arrow-kt:arrow-core", version.ref = "arrow" }
+jackson-bom = { module = "tools.jackson:jackson-bom", version.ref = "jackson" }
+lz4-java = { module = "at.yawk.lz4:lz4-java", version.ref = "lz4-java" }
+snappy-java = { module = "org.xerial.snappy:snappy-java", version.ref = "snappy-java" }
+
+[plugins]
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }

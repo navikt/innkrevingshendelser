@@ -1,0 +1,34 @@
+version: 2
+updates:
+  - package-ecosystem: "gradle"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:00"
+      timezone: "Europe/Oslo"
+    cooldown:
+      default-days: 7
+    open-pull-requests-limit: 5
+    groups:
+      nav:
+        patterns:
+          - "no.nav*"
+      gradle:
+        patterns:
+          - "*"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:00"
+      timezone: "Europe/Oslo"
+    cooldown:
+      default-days: 7
+    open-pull-requests-limit: 5
+    groups:
+      github-actions:
+        patterns:
+          - "*"

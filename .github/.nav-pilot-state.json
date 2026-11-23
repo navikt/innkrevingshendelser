@@ -1,9 +1,9 @@
 {
   "collection": "nav-pilot",
-  "version": "2026.11.04-221952-0b85e3a",
+  "version": "2026.11.18-212846-172293d",
   "scope": "repo",
   "source_repo": "navikt/copilot",
-  "source_sha": "e493cefdc144fb09b1824dc56fcfbc28130c2c9a",
+  "source_sha": "172293d45f5a5a7ff402aa7105cd7665a740ddb7",
   "installed_at": "2026-11-12T13:18:57Z",
   "files": [
     {
@@ -308,8 +308,8 @@
     },
     {
       "path": ".github/skills/observability-debugging/",
-      "hash": "d09dd467d7ce45a7",
-      "revision": "e493cefdc144fb09b1824dc56fcfbc28130c2c9a"
+      "hash": "b68cd05f7cf865e7",
+      "revision": "172293d45f5a5a7ff402aa7105cd7665a740ddb7"
     },
     {
       "path": ".github/skills/observability-setup/",
@@ -332,6 +332,10 @@
       "revision": "e493cefdc144fb09b1824dc56fcfbc28130c2c9a"
     },
     {
+      "path": ".github/skills/repo-baseline-audit/",
+      "hash": "f45887dfe8b2f49c"
+    },
+    {
       "path": ".github/skills/repo-pii-audit/",
       "hash": "6e3eb9adae55c238",
       "revision": "e493cefdc144fb09b1824dc56fcfbc28130c2c9a"
@@ -343,8 +347,8 @@
     },
     {
       "path": ".github/skills/security-owasp/",
-      "hash": "6c2dc64c5fe6b81e",
-      "revision": "e493cefdc144fb09b1824dc56fcfbc28130c2c9a"
+      "hash": "c020e45389dad61d",
+      "revision": "172293d45f5a5a7ff402aa7105cd7665a740ddb7"
     },
     {
       "path": ".github/skills/security-review/",
@@ -354,7 +358,7 @@
     {
       "path": ".github/skills/spring-boot-scaffold/",
       "hash": "2466ab52a1fdcf0d",
-      "revision": "e493cefdc144fb09b1824dc56fcfbc28130c2c9a"
+      "revision": "b16eeb43770c41327234574c7a0456adf6582870"
     },
     {
       "path": ".github/skills/terse-mode/",
