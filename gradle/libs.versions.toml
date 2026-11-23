@@ -9,6 +9,10 @@ micrometer = "1.18.0"
 logback = "1.6.8"
 logstash-logback-encoder = "9.0"
 arrow = "2.3.0.1"
+# Overstyringer av sårbare transitive versjoner, se build.gradle.kts
+jackson = "3.3.0"
+lz4-java = "1.11.4"
+snappy-java = "1.1.10.12"
 
 [libraries]
 ktor-server-core = { module = "io.ktor:ktor-server-core", version.ref = "ktor" }
@@ -25,6 +29,9 @@ logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "lo
 logstash-logback-encoder = { module = "net.logstash.logback:logstash-logback-encoder", version.ref = "logstash-logback-encoder" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx" }
 arrow-core = { module = "io.arrow-kt:arrow-core", version.ref = "arrow" }
+jackson-bom = { module = "tools.jackson:jackson-bom", version.ref = "jackson" }
+lz4-java = { module = "at.yawk.lz4:lz4-java", version.ref = "lz4-java" }
+snappy-java = { module = "org.xerial.snappy:snappy-java", version.ref = "snappy-java" }
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }

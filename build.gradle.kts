@@ -27,6 +27,18 @@ dependencies {
     testImplementation(libs.kotest.extensions.testcontainers)
     testImplementation(libs.ktor.server.test.host)
     testImplementation(libs.testcontainers.kafka)
+
+    // Overstyrer sårbare transitive versjoner funnet av Trivy.
+    // Fjern når kafka-clients og logstash-logback-encoder henter inn rettede versjoner selv.
+    runtimeOnly(platform(libs.jackson.bom))
+    constraints {
+        implementation(libs.lz4.java) {
+            because("CVE-2026-106451 i 1.11.2 fra kafka-clients 4.4.0")
+        }
+        implementation(libs.snappy.java) {
+            because("CVE-2026-108106 og CVE-2026-93451 i 1.1.10.7 fra kafka-clients 4.4.0")
+        }
+    }
 }
 
 kotlin {
