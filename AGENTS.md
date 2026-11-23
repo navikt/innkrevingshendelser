@@ -1,16 +1,16 @@
 # innkrevingshendelser
 
-Kotlin/Ktor-prosjekt for fremtidig publisering av innkrevingshendelser til Kafka,
-eid av team utenlandsadresser. Foreløpig kjører bare health- og metrics-endepunkter.
-Kafka-produsenten er en læringsoppgave med TODO-stubber, ikke en ferdig integrasjon.
+Kotlin/Ktor-prosjekt for publisering av innkrevingshendelser til Kafka,
+eid av team utenlandsadresser. Applikasjonen kjører health- og metrics-endepunkter.
+`KafkaPublisher` sender meldinger til Kafka, men er ikke koblet inn i applikasjonen.
 Ingen API-polling, publiserings-API, database eller Kafka-konsument inngår i applikasjonen.
-Kun syntetiske testdata uten personopplysninger er tillatt nå.
+Kun syntetiske testdata uten personopplysninger er tillatt.
 
 ## Bygg og kjør lokalt
 
 Java-versjonen styres av `mise.toml`. Gradle-versjonen styres av wrapperen.
-Les `mise.toml` før du kjører `mise trust`. Docker-motoren installeres separat
-og må kjøre når Kafka-integrasjonstestene senere aktiveres.
+Les `mise.toml` før du kjører `mise trust`. Docker må kjøre for `mise run check`,
+fordi Kafka-integrasjonstesten bruker Testcontainers.
 
 ```bash
 mise trust
@@ -22,8 +22,7 @@ mise run run
 
 `mise run test` kjører testene. `mise run build` kjører også `installDist`.
 Rapporten ligger i `build/reports/tests/test/index.html`.
-Tre Ktor-tester er aktive. Fire Kafka-testskjeletter vises som hoppet over.
-Et grønt bygg bekrefter derfor ikke Kafka-publisering.
+Kafka-integrasjonstesten sender en melding til en lokal broker og leser den tilbake.
 
 Lokal verifikasjon mens applikasjonen kjører:
 
@@ -57,35 +56,35 @@ Base-imagets digest må oppdateres når en ny runtime-versjon tas i bruk.
 ```text
 mise.toml                         Java og utviklerkommandoer
 gradle/libs.versions.toml          Kotlin- og bibliotekversjoner
-src/main/kotlin/                  Ktor og Kafka-stubber
+src/main/kotlin/                  Ktor og Kafka-adapter
 src/main/resources/logback.xml    JSON-logging til stdout
-src/test/kotlin/                  Kotest og Kafka-testskjeletter
+src/test/kotlin/                  Kotest-tester, testpakker speiler src/main
 .nais/                           Manifestutkast for dev-gcp
 .github/workflows/build.yaml     Bygg og tester, uten deploy
 Dockerfile                       Runtime for ferdigbygd distribusjon
 ```
 
-## Kafka-oppgaven
+## Kafka-produsenten
 
-Rød sone: Utvikleren implementerer `KafkaPublisher` og fullfører testskjelettene.
-Direkte `kafka-clients` er valgt fordi applikasjonen bare skal produsere meldinger.
-Hendelseskontrakt, partisjonsnøkkel og leveringskrav for ekte hendelser er ikke bestemt.
+Rød sone: Kafka-konfigurasjon, leveringsgarantier og lukking.
+Direkte `kafka-clients` er valgt fordi applikasjonen bare produserer meldinger.
 
-1. Implementer produsentkonfigurasjon og eierskap. Nais leverer blant annet
-   `KAFKA_BROKERS`, `KAFKA_KEYSTORE_PATH`, `KAFKA_TRUSTSTORE_PATH` og
-   `KAFKA_CREDSTORE_PASSWORD`. Behold TLS-verifisering. Testbrokerens lokale
-   tilkobling er ikke en mal for sikkerhetskonfigurasjonen i Nais.
-2. Implementer sending med `acks=all`, produsent-idempotens og begrenset ventetid.
-   En ack betyr at broker har bekreftet meldingen, ikke at en konsument har behandlet den.
-   Timeout kan bety ukjent utfall. Produsent-idempotens gir ikke ende-til-ende
-   deduplisering ved gjentatte kall eller restart.
-3. Implementer lukking med begrenset ventetid. Ikke logg credentials, key eller payload,
-   heller ikke gjennom exceptions eller Kafka-konfigurasjon.
-4. Fullfør og aktiver roundtrip-testen med Testcontainers. Konsumenten finnes bare
-   i testen og skal verifisere topic, key og value. Fullfør også feil-, timeout-
-   og lukketestene. Kjør `mise run check` med Docker-motoren startet.
+`KafkaPublisher` i `adapter.kafka` sender én melding med `publish`, venter på
+brokerens bekreftelse og kansellerer sendingen hvis coroutinen kanselleres.
+`close` venter høyst `closeTimeout` (standard 5 sekunder) på meldinger som ikke er sendt.
+Produsentkonfigurasjonen sendes inn utenfra.
 
-Fortell deretter hva koden gjør, hvorfor løsningen er valgt, og hvilke leveringsgarantier den gir.
+Regler for produsenten:
+
+- Konfigurasjon i Nais leses fra `KAFKA_BROKERS`, `KAFKA_KEYSTORE_PATH`,
+  `KAFKA_TRUSTSTORE_PATH` og `KAFKA_CREDSTORE_PASSWORD`. TLS-verifisering beholdes.
+  Testbrokerens lokale tilkobling er ikke en mal for sikkerhetskonfigurasjonen.
+- En ack betyr at brokeren har bekreftet meldingen, ikke at en konsument har behandlet den.
+  Timeout kan bety ukjent utfall. Produsent-idempotens gir ikke ende-til-ende-deduplisering
+  ved gjentatte kall eller restart.
+- Logg aldri credentials, key eller payload, heller ikke gjennom exceptions eller
+  Kafka-konfigurasjon.
+- Konsumenter finnes bare i tester.
 
 ## Drift og utrulling
 
@@ -97,19 +96,17 @@ Bare applikasjonen har skrivetilgang. Ingen konsumenter har lesetilgang.
 CI kjører bygg, tester og `installDist` på PR-er og `main`. Den bygger eller
 publiserer ikke container-images og deployer ikke ressurser.
 
-Før første deploy må Kafka-oppgaven være fullført og containeren verifisert.
-Vurder readiness på nytt når produsenten kobles inn. Ekte hendelser krever nye
-avklaringer om personvern, kontrakt, tilgang og leveringskrav.
+Ekte hendelser krever avklaringer om personvern, kontrakt, tilgang og leveringskrav.
+Readiness må vurderes når produsenten kobles inn i applikasjonen.
 
 JVM- og HTTP-metrikker eksponeres på `/metrics`. Livssykluslogger går til stdout
-som JSON. Kafka-tellere for bekreftede sendinger, feil og sendetid gjenstår.
-Bruk aldri payload eller personopplysninger som metrikklabler.
+som JSON. Bruk aldri payload eller personopplysninger som metrikklabler.
 
-Etter en senere dev-deploy: Sjekk health-endepunkter, Prometheus-scraping og
+Etter en dev-deploy: Sjekk health-endepunkter, Prometheus-scraping og
 oppstartslogger. Verifiser publisering separat med syntetiske data og avklart
 testtilgang. Ikke åpne lesetilgang automatisk for å gjøre testen.
-Rollback ved senere oppdateringer er å gjeninnføre forrige fungerende image.
-Ikke slett topicet som del av rollback. Ingen ressurser er opprettet av dette oppsettet.
+Rollback er å gjeninnføre forrige fungerende image.
+Ikke slett topicet som del av rollback.
 
 ## Utviklingsregler
 
@@ -119,10 +116,14 @@ Reglene der utfyller Navs generelle instruksjoner og går foran ved konflikt om 
 - Ports & Adapters: `adapter` → `application` → `domain`. Indre lag har ingen rammeverksimporter,
   unntatt `kotlinx.coroutines` og `arrow-core`. Metrikker telles i adaptere.
 - Testdrevet utvikling: feilende test først, så minst mulig kode, så refaktorering.
+  Kan agenten ikke kjøre testene, ber den utvikleren bekrefte rød test før implementasjon.
   Brukstilfeller testes gjennom porten med håndskrevne fakes, ikke mock-bibliotek.
+  Tester skrives med Kotest `WordSpec`.
 - Navngiving: domeneklasser og egenskapene deres har norske navn. Alt annet, også testnavn,
   skrives på engelsk. Æ, ø og å er tillatt i `domain` og `application`, ikke i `adapter` eller
   i noe som forlater applikasjonen.
+- Dokumentasjon beskriver hvordan ting er. Ingen TODO-er, gjenstående oppgaver eller
+  midlertidige tilstander i dokumentasjon eller skills. Det som gjenstår, hører hjemme i issues.
 
 ## Code Style
 

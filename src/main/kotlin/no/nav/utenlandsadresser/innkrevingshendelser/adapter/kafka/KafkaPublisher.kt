@@ -7,11 +7,19 @@ import org.apache.kafka.clients.producer.ProducerRecord
 import org.apache.kafka.clients.producer.RecordMetadata
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
+import kotlin.time.toJavaDuration
 
 class KafkaPublisher(
     private val producer: Producer<String, String>,
     private val topic: KafkaTopic,
-) : AutoCloseable by producer {
+    private val closeTimeout: Duration = 5.seconds,
+) : AutoCloseable {
+    override fun close() {
+        producer.close(closeTimeout.toJavaDuration())
+    }
+
     suspend fun publish(
         key: KafkaKey,
         value: KafkaValue,

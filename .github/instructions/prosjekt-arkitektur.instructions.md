@@ -23,13 +23,20 @@ om kodestruktur. Sikkerhetsreglene gjelder alltid.
 ## Testdrevet utvikling
 
 - Skriv testen først, kjør den og vis at den feiler før du implementerer.
+  Kan du ikke kjøre testene, ber du utvikleren kjøre dem og venter på bekreftet rød test.
 - Test brukstilfeller gjennom den inngående porten med håndskrevne fakes av
   utgående porter. Ikke mock egne porter eller domeneklasser.
 - Test både `Right` og relevante `Left`-varianter.
+- Bruk Kotest `WordSpec`: `"subject" should { "do something" { } }`, med `When` som ytre nivå ved behov.
 - Testklasser ligger i samme pakke som koden de tester. Felles testhjelpere ligger i `kotest`.
 - I rød sone lager du bare tester og stubber, med mindre utvikleren ber om mer.
 - Endre aldri en eksisterende test for å få den grønn uten å si fra.
 - Oppgi hvilke tester du kjørte, og resultatet. Si fra hvis de ikke kunne kjøres.
+
+## Dokumentasjon
+
+- Ingen TODO-er, oppgavelister eller midlertidige tilstander i dokumentasjon eller skills.
+  Det som gjenstår, registreres som GitHub-issue.
 
 ## Navngiving
 

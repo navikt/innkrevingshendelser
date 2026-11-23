@@ -100,6 +100,10 @@ trenger ikke Docker.
 - Test oppførsel gjennom porten, ikke private funksjoner eller interne kall.
 - Med `Either` testes både `Right` og hver relevant `Left`-variant.
 - Én oppførsel per test, med et engelsk testnavn som beskriver oppførselen.
+- Tester skrives med Kotest `WordSpec`. Subjektet står i `should`-blokken, og
+  testnavnet fullfører setningen: `"close" should { "wait at most the configured
+  close timeout" { } }`. Bruk `When` som ytre nivå når testene grupperes etter
+  situasjon, for eksempel gyldig og ugyldig input eller hver `Left`-variant.
 - Testklasser ligger i samme pakke og mappestruktur under `src/test/kotlin` som
   koden de tester under `src/main/kotlin`. Felles testhjelpere som ikke tester en
   bestemt klasse, ligger i pakken `kotest`.
@@ -122,10 +126,21 @@ trenger ikke Docker.
   topic-navn, metrikknavn, URL-er og miljøvariabler. Adapteren oversetter, for
   eksempel fra `Krav.beløp` til JSON-feltet `belop` eller `amount`.
 
+## 4. Dokumentasjon
+
+- Dokumentasjon og skills beskriver hvordan ting er nå, ikke hva som gjenstår.
+- Ingen TODO-er, oppgavelister, «foreløpig», «senere» eller andre midlertidige
+  tilstander i `AGENTS.md`, `docs/`, `.github/instructions/` eller skills.
+- Det som gjenstår, registreres som GitHub-issue.
+- Når koden endres, oppdateres dokumentasjonen i samme PR.
+
 ### KI-agenter og TDD
 
 - Agenten skriver testen før produksjonskoden, kjører den og viser at den feiler,
   før den skriver implementasjonen.
+- Kan agenten ikke kjøre testene selv, for eksempel i en sandbox, ber den
+  utvikleren kjøre dem og bekrefte at den nye testen feiler av riktig grunn.
+  Agenten venter på svar før den implementerer.
 - For rød sone (domeneregler, sikkerhet og Kafka-leveringsgarantier) lager
   agenten bare testene og stubber, med mindre utvikleren ber om implementasjon.
 - Agenten endrer aldri en eksisterende test for å få den grønn uten å si fra og
