@@ -1,0 +1,28 @@
+name: Dependabot automerge
+
+on:
+  schedule:
+    # Hverdager kl. 07–13 UTC, slik at noen er tilgjengelig hvis en merge går galt
+    - cron: "0 7-13 * * 1-5"
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
+jobs:
+  automerge:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Merge Dependabot PRs
+        uses: navikt/automerge-dependabot@69852d2204654904759e85f88f4a45bbf8854905 # v1.8.0
+        with:
+          token: ${{ github.token }}
+          semver-filter: patch,minor
+          blackout-periods: Sat,Sun,Dec 24-Jan 5

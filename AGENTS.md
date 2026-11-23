@@ -140,6 +140,12 @@ Keep diffs small and focused so they are easy to review.
 
 Bruk feature-branch og PR. CI bygger og tester endringer, men deployer ikke.
 
+Dependabot-PR-er med patch- og minor-oppdateringer merges automatisk av
+`.github/workflows/dependabot-automerge.yaml` (`navikt/automerge-dependabot`),
+på hverdager og utenom høytider. Merging krever at påkrevde statussjekker på
+`main` har bestått. Major-oppdateringer merges av en person. Dependabot venter
+7 dager etter en ny versjon før den lager PR (`cooldown`).
+
 ## Boundaries
 
 ### ✅ Always
