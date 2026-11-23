@@ -118,6 +118,8 @@ Reglene der utfyller Navs generelle instruksjoner og går foran ved konflikt om 
 
 - Ports & Adapters: `adapter` → `application` → `domain`. Indre lag har ingen rammeverksimporter,
   unntatt `kotlinx.coroutines` og `arrow-core`. Metrikker telles i adaptere.
+- Testdrevet utvikling: feilende test først, så minst mulig kode, så refaktorering.
+  Brukstilfeller testes gjennom porten med håndskrevne fakes, ikke mock-bibliotek.
 
 ## Code Style
 

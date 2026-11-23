@@ -66,3 +66,56 @@ Vi legger dem utenfor de indre lagene:
 - Dekoratøren kobles på i oppstartskoden. En test av `/metrics` bekrefter at
   metrikken finnes.
 
+## 2. Testdrevet utvikling
+
+Ny oppførsel skrives test først, i korte runder:
+
+1. **Rød.** Skriv én test som beskriver ønsket oppførsel. Kjør den og se at den
+   feiler av riktig grunn: en manglende funksjon eller feil verdi, ikke en
+   kompileringsfeil i testen selv.
+2. **Grønn.** Skriv minst mulig produksjonskode for å få testen grønn.
+3. **Refaktorer.** Rydd i kode og test mens alle tester er grønne.
+
+Den røde fasen skjer lokalt. Feilende tester committes ikke, i tråd med Navs
+testinstruksjoner.
+
+### Testnivåer per lag
+
+| Lag | Testtype | Avhengigheter i testen |
+|---|---|---|
+| `domain` | Rene enhetstester | Ingen |
+| `application` | Enhetstester av brukstilfeller gjennom den inngående porten | Håndskrevne fakes av utgående porter |
+| `adapter` | Integrasjonstester av adapteren | Testcontainers, MockOAuth2Server, Ktor `testApplication` |
+| Hele appen | Få ende-til-ende-tester | Ekte adaptere i testoppsett |
+
+Mesteparten av testene skal ligge i `domain` og `application`. De er raske og
+trenger ikke Docker.
+
+### Regler
+
+- Bruk håndskrevne fakes av egne porter, ikke mock-bibliotek. En fake er en enkel
+  implementasjon i minnet, for eksempel en publisher som samler hendelsene i en
+  liste. Mock-bibliotek kan brukes for tredjeparts-API-er der en fake blir
+  urimelig dyr, men aldri for domeneklasser eller egne porter.
+- Test oppførsel gjennom porten, ikke private funksjoner eller interne kall.
+- Med `Either` testes både `Right` og hver relevant `Left`-variant.
+- Én oppførsel per test, med et testnavn som beskriver oppførselen.
+- En bugfiks starter med en test som gjenskaper feilen.
+- Tester bruker bare syntetiske data uten personopplysninger.
+- Hoppede tester (`xtest`, `enabled = false`) krever en kommentar med grunn og
+  avklaring i PR-en.
+- Dekningskravene i Navs testinstruksjoner gjelder. Dekning er et minimum, ikke
+  målet. Målet er at hver oppførsel er drevet frem av en test.
+- `mise run check` skal være grønn før PR.
+
+### KI-agenter og TDD
+
+- Agenten skriver testen før produksjonskoden, kjører den og viser at den feiler,
+  før den skriver implementasjonen.
+- For rød sone (domeneregler, sikkerhet og Kafka-leveringsgarantier) lager
+  agenten bare testene og stubber, med mindre utvikleren ber om implementasjon.
+- Agenten endrer aldri en eksisterende test for å få den grønn uten å si fra og
+  begrunne det.
+- Agenten oppgir hvilke tester som ble kjørt, og resultatet. Kan testene ikke
+  kjøres, sier agenten det i stedet for å anta at de er grønne.
+
